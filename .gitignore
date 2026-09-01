@@ -1,0 +1,16 @@
+# 私鑰 - 絕對不要提交
+*.conf
+!docs/wireguard-us-phoenix.conf.example
+*.key
+*.pem
+*.pub
+!docs/.nojekyll
+.ssh/
+tmp/opencode/wireguard-us-phoenix.conf
+wireguard-us-phoenix.conf
+
+# 系統
+.DS_Store
+Thumbs.db
+server.pid
+node_modules/

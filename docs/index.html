@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Phoenix VPN - 部署記錄</title>
+<meta name="description" content="Oracle Cloud Always Free - US West Phoenix WireGuard VPN 部署文檔">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Noto Sans TC',system-ui,sans-serif}
+  .mono{font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body class="bg-[#fafaf9] text-zinc-900 antialiased">
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-zinc-200">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white grid place-items-center text-sm font-bold">US</div>
+        <span class="font-semibold">Phoenix VPN Docs</span>
+        <span class="hidden sm:inline text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full">● Running</span>
+      </div>
+      <div class="text-xs text-zinc-500">2026-09-01 部署 · Oracle Always Free</div>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-6 py-8">
+    <!-- Hero -->
+    <div class="bg-zinc-900 text-white rounded-2xl p-8 md:p-10 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-transparent to-cyan-500/20"></div>
+      <div class="relative">
+        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 bg-white/10 rounded-full border border-white/20 mb-4">
+          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> US West (Phoenix) · us-phoenix-1 · PHX-AD-1
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">美國乾淨節點部署記錄</h1>
+        <p class="mt-3 text-zinc-400 max-w-2xl">Oracle Cloud Always Free · WireGuard · 原生美國 IP · 私有節點僅一人使用，Fraud Score 接近 0</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#quickstart" class="px-5 py-2.5 bg-white text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-100">快速連線</a>
+          <a href="#config" class="px-5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-sm hover:bg-white/20">查看設定檔位置</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="grid md:grid-cols-3 gap-4 mt-6">
+      <div class="bg-white rounded-xl border border-zinc-200 p-5">
+        <div class="text-xs text-zinc-500 uppercase tracking-wider">Public IP</div>
+        <div class="mono text-lg font-semibold mt-1">129.146.115.218</div>
+        <div class="text-xs text-zinc-500 mt-1">Phoenix, AZ · AS31898 Oracle</div>
+        <div class="mt-3 flex gap-2">
+          <a href="https://ipinfo.io/129.146.115.218" target="_blank" class="text-xs px-2 py-1 bg-zinc-900 text-white rounded">ipinfo.io</a>
+          <a href="https://whoer.net" target="_blank" class="text-xs px-2 py-1 border border-zinc-200 rounded">whoer.net 檢測</a>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-zinc-200 p-5">
+        <div class="text-xs text-zinc-500 uppercase tracking-wider">主機規格</div>
+        <div class="font-semibold mt-1">VM.Standard.A1.Flex</div>
+        <div class="text-sm text-zinc-600">4 OCPU · 24 GB RAM · 50 GB Boot</div>
+        <div class="text-xs text-zinc-500 mt-2">Ubuntu 22.04 ARM64 · Always Free</div>
+        <div class="mono text-xs mt-2 px-2 py-1 bg-zinc-50 rounded border">vpn-us-phoenix · vpn-vcn 10.0.0.0/16</div>
+      </div>
+      <div class="bg-white rounded-xl border border-zinc-200 p-5">
+        <div class="text-xs text-zinc-500 uppercase tracking-wider">VPN 類型</div>
+        <div class="font-semibold mt-1">WireGuard · UDP 51820</div>
+        <div class="text-sm text-zinc-600">10.66.66.0/24 · fd42:42:42::/64</div>
+        <div class="text-xs text-zinc-500 mt-2">DNS 1.1.1.1 / 8.8.8.8 · MTU 1280</div>
+        <span class="inline-block mt-2 text-xs px-2 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200">● wg0 Active</span>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+      <div class="text-amber-600 text-lg">⚠</div>
+      <div class="text-sm">
+        <div class="font-semibold text-amber-900">私鑰不會上傳到 GitHub</div>
+        <div class="text-amber-800 mt-1">此頁面為公開文檔，<b>不會</b>包含 PrivateKey / PresharedKey。完整設定檔請從本機取得：<span class="mono bg-white px-1.5 py-0.5 rounded border">Desktop\wireguard-us-phoenix.conf</span> 和 <span class="mono bg-white px-1.5 py-0.5 rounded border">D:\WireGuard\</span> 私鑰檔案 <span class="mono bg-white px-1.5 py-0.5 rounded border">C:\Users\Administrator\.ssh\vpn-us-phoenix</span> 切勿上傳。</div>
+      </div>
+    </div>
+
+    <!-- Quick Start -->
+    <section id="quickstart" class="mt-8">
+      <h2 class="text-xl font-bold">快速連線</h2>
+      <div class="grid md:grid-cols-2 gap-4 mt-4">
+        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+          <h3 class="font-semibold flex items-center gap-2">🖥 Windows <span class="text-xs font-normal px-2 py-0.5 bg-zinc-100 rounded">已安裝到 D 槽</span></h3>
+          <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
+            <li>安裝程式在 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">D:\Installers\wireguard.msi</span> 已安裝到 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">C:\Program Files\WireGuard</span>（僅 9 MB，含驅動必須在 C 槽，已備份 exe 到 <span class="mono">D:\WireGuard\</span>）</li>
+            <li>打開 <b>WireGuard</b> → 點 <b>Add Tunnel</b> → <b>Import tunnel from file</b></li>
+            <li>選擇 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</span></li>
+            <li>點 <b>Activate</b>，狀態變綠色即連上美國</li>
+            <li>瀏覽器開 <a href="https://whoer.net" class="underline">whoer.net</a> 確認顯示 Phoenix, US</li>
+          </ol>
+          <div class="mt-4 p-3 bg-zinc-50 rounded-lg border mono text-xs">
+            備用啟動（Portable）：<br>
+            D:\WireGuard\wireguard.exe /installtunnelservice D:\WireGuard\wireguard-us-phoenix.conf
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+          <h3 class="font-semibold">📱 手機 / 平板</h3>
+          <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
+            <li>App Store / Play Store 搜 <b>WireGuard</b> 安裝</li>
+            <li>點 <b>+</b> → <b>Create from file or archive</b> → 匯入同一個 <span class="mono">.conf</span></li>
+            <li>或在電腦用 <span class="mono bg-zinc-50 px-1 py-0.5 rounded">qrencode</span> 掃 QR 匯入（部署時已產生）</li>
+            <li>開啟開關，允許 VPN 配置</li>
+          </ol>
+          <div class="mt-4 text-xs text-zinc-500">同一個設定檔可在多裝置匯入，但不要同時連線同一 Peer，會互搶。需多裝置請在伺服器新增 Peer。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Config Location -->
+    <section id="config" class="mt-8 bg-white rounded-xl border border-zinc-200 p-6">
+      <h2 class="font-bold">本機檔案位置總覽</h2>
+      <div class="mt-4 grid md:grid-cols-2 gap-4 mono text-xs">
+        <div class="space-y-2">
+          <div class="p-3 bg-zinc-50 rounded border">
+            <div class="text-zinc-500">WireGuard 設定檔（客戶端）</div>
+            <div class="font-semibold text-sm mt-1">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</div>
+            <div>D:\opencode默認專案\tmp\opencode\wireguard-us-phoenix.conf</div>
+          </div>
+          <div class="p-3 bg-zinc-50 rounded border">
+            <div class="text-zinc-500">SSH 私鑰（連主機用）</div>
+            <div class="font-semibold text-sm mt-1">C:\Users\Administrator\.ssh\vpn-us-phoenix</div>
+            <div>公鑰：vpn-us-phoenix.pub</div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="p-3 bg-zinc-50 rounded border">
+            <div class="text-zinc-500">WireGuard 安裝檔</div>
+            <div class="font-semibold text-sm mt-1">D:\Installers\wireguard.msi</div>
+            <div>D:\Installers\wireguard-installer.exe</div>
+            <div>執行檔備份：D:\WireGuard\wireguard.exe</div>
+          </div>
+          <div class="p-3 bg-zinc-50 rounded border">
+            <div class="text-zinc-500">伺服器 SSH</div>
+            <div class="font-semibold text-sm mt-1">ssh -i ~/.ssh/vpn-us-phoenix ubuntu@129.146.115.218</div>
+            <div>sudo wg show 查看連線</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Example Config -->
+    <section class="mt-8 bg-white rounded-xl border border-zinc-200 p-6">
+      <h2 class="font-bold">設定檔範例（已脫敏）</h2>
+      <p class="text-sm text-zinc-600 mt-1">真實 PrivateKey / PresharedKey 請用本機檔案，此處以 *** 代替，避免外洩。</p>
+      <pre class="mt-4 bg-zinc-900 text-zinc-100 p-4 rounded-lg mono text-xs overflow-x-auto"><code>[Interface]
+PrivateKey = *** 請從本機 wireguard-us-phoenix.conf 複製 ***
+Address = 10.66.66.2/24,fd42:42:42::2/64
+DNS = 1.1.1.1,8.8.8.8
+MTU = 1280
+
+[Peer]
+PublicKey = Z41fXyOIen8r4NqqUAVz86NU5pJ7YueuRmgBLmBhVgA=
+PresharedKey = *** 請從本機複製 ***
+Endpoint = 129.146.115.218:51820
+AllowedIPs = 0.0.0.0/0,::/0
+PersistentKeepalive = 25</code></pre>
+    </section>
+
+    <!-- Maintenance -->
+    <section class="mt-8 grid md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl border border-zinc-200 p-6">
+        <h3 class="font-semibold">新增第二個裝置</h3>
+        <p class="text-sm text-zinc-600 mt-1">SSH 進主機執行：</p>
+        <pre class="mt-3 bg-zinc-900 text-zinc-100 p-3 rounded mono text-xs overflow-x-auto">ssh -i ~/.ssh/vpn-us-phoenix ubuntu@129.146.115.218
+# 在伺服器上產生第二個客戶端
+wg genkey | tee /tmp/c2_priv | wg pubkey > /tmp/c2_pub
+wg genpsk > /tmp/c2_psk
+cat /tmp/c2_priv
+cat /tmp/c2_pub
+# 然後編輯 /etc/wireguard/wg0.conf 新增一個 [Peer]，重啟 wg-quick@wg0</pre>
+      </div>
+      <div class="bg-white rounded-xl border border-zinc-200 p-6">
+        <h3 class="font-semibold">維運提醒</h3>
+        <ul class="mt-2 text-sm space-y-1.5 list-disc list-inside text-zinc-700">
+          <li>Oracle Always Free 若 7 天完全閒置可能回收 A1.Flex，偶爾連一下即可</li>
+          <li>防火牆已開放 22/80/443/8443/51820，完成後建議把 80/443 收斂到必要來源</li>
+          <li>每月流量免費 10TB 出站，WireGuard 非常省</li>
+          <li>忘記設定？此 GitHub Page 就是說明書</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="mt-10 pt-6 border-t border-zinc-200 text-xs text-zinc-500 flex justify-between">
+      <span>部署時間：2026-09-01 · Home Region: us-phoenix-1 · 部署者：Oracle Console AI + WireGuard</span>
+      <span>此頁面不含任何私鑰</span>
+    </footer>
+  </main>
+</body>
+</html>
