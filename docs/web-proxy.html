@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix 網頁代理 · 零安裝美國瀏覽</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans TC',system-ui}.mono{font-family:'JetBrains Mono',monospace}</style>
+</head>
+<body class="bg-[#fafaf9] min-h-screen">
+<div class="max-w-5xl mx-auto p-6">
+  <nav class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-zinc-900 text-white grid place-items-center font-bold">US</div>
+      <div><div class="font-bold">Phoenix 網頁代理</div><div class="text-xs text-zinc-500">零安裝 · 任何電腦 · GitHub Page 直接用</div></div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="dot" class="text-xs px-3 py-1 rounded-full bg-zinc-100 border">檢測中...</span>
+      <a href="./index.html" class="text-xs underline text-zinc-500">回文檔 →</a>
+    </div>
+  </nav>
+
+  <div class="bg-zinc-900 text-white rounded-2xl p-6">
+    <div class="flex flex-wrap gap-2 items-center">
+      <div class="flex-1 min-w-[280px] flex bg-white rounded-xl overflow-hidden">
+        <span class="px-3 py-3 text-zinc-400 text-sm">https://</span>
+        <input id="url" class="flex-1 py-3 outline-none text-zinc-900 text-sm" placeholder="輸入網址，例如 ipinfo.io/json 或 google.com" value="ipinfo.io/json">
+        <button id="btnGo" class="px-6 bg-emerald-500 text-white font-bold hover:bg-emerald-600">以美國 IP 打開</button>
+      </div>
+      <button id="btnToggle" class="px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-sm hover:bg-white/20">已啟用 ●</button>
+    </div>
+    <div class="mt-3 flex gap-2 text-xs flex-wrap">
+      <button class="quick px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20" data-url="https://ipinfo.io/json">檢測 IP</button>
+      <button class="quick px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20" data-url="https://whoer.net">whoer.net</button>
+      <button class="quick px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20" data-url="https://www.google.com">Google 美國</button>
+      <button class="quick px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20" data-url="https://chat.openai.com">ChatGPT</button>
+      <span id="via" class="ml-auto text-zinc-400 mono text-xs"></span>
+    </div>
+  </div>
+
+  <div class="mt-4 grid md:grid-cols-3 gap-3">
+    <div class="bg-white border rounded-xl p-4 text-center">
+      <div class="text-xs text-zinc-500">當前代理 IP</div>
+      <div id="ip" class="mono font-bold">--</div>
+      <div id="loc" class="text-xs text-zinc-500">--</div>
+    </div>
+    <div class="bg-white border rounded-xl p-4 text-center">
+      <div class="text-xs text-zinc-500">節點</div>
+      <div class="font-bold">Phoenix, US</div>
+      <div class="text-xs text-emerald-600">● 129.146.115.218</div>
+    </div>
+    <div class="bg-white border rounded-xl p-4 text-center">
+      <div class="text-xs text-zinc-500">狀態</div>
+      <div id="status" class="font-bold">--</div>
+      <div class="text-xs text-zinc-500">零安裝 · 關閉即恢復</div>
+    </div>
+  </div>
+
+  <div class="mt-4 bg-white border rounded-xl overflow-hidden" style="height: 62vh">
+    <div class="px-4 py-2 bg-zinc-50 border-b flex items-center justify-between">
+      <span class="text-xs text-zinc-500">預覽窗口（通過 Phoenix 代理）</span>
+      <div class="flex gap-2">
+        <button id="btnOpen" class="text-xs px-3 py-1 bg-zinc-900 text-white rounded">新分頁打開</button>
+        <button id="btnCopy" class="text-xs px-3 py-1 border rounded">複製代理連結</button>
+      </div>
+    </div>
+    <iframe id="frame" class="w-full h-full border-0 bg-white" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  </div>
+  <div id="log" class="mt-3 mono text-xs bg-zinc-900 text-zinc-300 p-3 rounded-xl max-h-28 overflow-auto">就緒。輸入網址按「以美國 IP 打開」。</div>
+</div>
+<script>
+let PROXY = "", TOKEN = "phoenix2026", enabled = true;
+async function loadTunnel(){
+  try{
+    const r = await fetch('./tunnel.json?_=' + Date.now());
+    const j = await r.json();
+    PROXY = j.url; TOKEN = j.token;
+    document.getElementById('via').textContent = 'via ' + PROXY;
+  }catch(e){
+    PROXY = "https://allowed-childhood-improvement-manual.trycloudflare.com";
+    document.getElementById('via').textContent = 'via ' + PROXY + ' (fallback)';
+  }
+  check();
+}
+async function check(){
+  const dot = document.getElementById('dot'), st=document.getElementById('status');
+  try{
+    const r = await fetch(PROXY + '/health');
+    const j = await r.json();
+    dot.textContent = '● 已連接 Phoenix'; dot.className='text-xs px-3 py-1 rounded-full bg-emerald-500 text-white';
+    st.textContent='已連接';
+    // 查 IP
+    const ipR = await fetch(PROXY + '/proxy?url=https://ipinfo.io/json&token=' + TOKEN);
+    const ipJ = await ipR.json();
+    document.getElementById('ip').textContent = ipJ.ip || '--';
+    document.getElementById('loc').textContent = (ipJ.city||'') + ' ' + (ipJ.country||'');
+  }catch(e){
+    dot.textContent='○ 未連接'; dot.className='text-xs px-3 py-1 rounded-full bg-amber-100 text-amber-800 border';
+    st.textContent='未連接';
+    document.getElementById('log').textContent = '代理未連接: ' + e + '\n' + document.getElementById('log').textContent;
+  }
+}
+function buildProxyUrl(u){
+  if(!u.startsWith('http')) u = 'https://' + u;
+  return PROXY + '/proxy?url=' + encodeURIComponent(u) + '&token=' + TOKEN;
+}
+document.getElementById('btnGo').onclick = ()=>{
+  let u = document.getElementById('url').value.trim();
+  if(!u) return;
+  const p = buildProxyUrl(u);
+  document.getElementById('frame').src = p;
+  document.getElementById('log').textContent = '載入: ' + u + ' -> ' + p + '\n' + document.getElementById('log').textContent;
+  if(!enabled) document.getElementById('log').textContent = '提示：代理已停用，點擊「已啟用」恢復\n' + document.getElementById('log').textContent;
+};
+document.getElementById('btnOpen').onclick = ()=>{
+  let u = document.getElementById('url').value.trim();
+  if(!u.startsWith('http')) u='https://'+u;
+  window.open(buildProxyUrl(u), '_blank');
+};
+document.getElementById('btnCopy').onclick = ()=>{
+  let u=document.getElementById('url').value.trim();
+  navigator.clipboard.writeText(buildProxyUrl(u));
+  document.getElementById('log').textContent='已複製代理連結\n'+document.getElementById('log').textContent;
+};
+document.getElementById('btnToggle').onclick = ()=>{
+  enabled = !enabled;
+  document.getElementById('btnToggle').textContent = enabled ? '已啟用 ●' : '已停用 ○';
+  document.getElementById('btnToggle').className = enabled ? 'px-5 py-3 bg-emerald-500 text-white rounded-xl' : 'px-5 py-3 bg-white/10 border border-white/20 rounded-xl';
+  document.getElementById('log').textContent = (enabled ? '已啟用：所有請求走 Phoenix' : '已停用：關閉代理，恢復本地 IP') + '\n' + document.getElementById('log').textContent;
+  // 停用時讓輸入框直接跳轉原站
+  if(!enabled){
+    document.getElementById('btnGo').onclick = ()=>{
+      let u=document.getElementById('url').value.trim();
+      if(!u.startsWith('http')) u='https://'+u;
+      document.getElementById('frame').src = u;
+    };
+  } else {
+    document.getElementById('btnGo').onclick = ()=>{
+      let u=document.getElementById('url').value.trim();
+      document.getElementById('frame').src = buildProxyUrl(u);
+    };
+  }
+};
+document.querySelectorAll('.quick').forEach(b=>{
+  b.onclick = ()=>{ document.getElementById('url').value = b.dataset.url.replace('https://',''); document.getElementById('btnGo').click(); };
+});
+document.getElementById('url').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('btnGo').click(); });
+loadTunnel(); setInterval(check, 10000);
+</script>
+</body>
+</html>
