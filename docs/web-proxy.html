@@ -57,7 +57,15 @@
     </div>
   </div>
 
-  <div class="mt-4 bg-white border rounded-xl overflow-hidden" style="height: 62vh">
+  <!-- 分頁 -->
+  <div class="mt-4 flex gap-2">
+    <button id="tabProxy" class="px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-bold">網頁代理（輕量）</button>
+    <button id="tabBrowser" class="px-4 py-2 bg-white border rounded-xl text-sm">☁ 雲端 Chrome（完整，像本地）</button>
+    <span class="ml-auto text-xs text-zinc-500 py-2">零安裝 · 任何電腦</span>
+  </div>
+
+  <!-- 網頁代理預覽 -->
+  <div id="panelProxy" class="mt-3 bg-white border rounded-xl overflow-hidden" style="height: 62vh">
     <div class="px-4 py-2 bg-zinc-50 border-b flex items-center justify-between">
       <span class="text-xs text-zinc-500">預覽窗口（通過 Phoenix 代理）</span>
       <div class="flex gap-2">
@@ -67,19 +75,35 @@
     </div>
     <iframe id="frame" class="w-full h-full border-0 bg-white" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
   </div>
+
+  <!-- 雲端 Chrome -->
+  <div id="panelBrowser" class="mt-3 bg-white border rounded-xl overflow-hidden hidden" style="height: 72vh">
+    <div class="px-4 py-2 bg-emerald-50 border-b flex items-center justify-between">
+      <span class="text-xs text-emerald-800">☁ 雲端 Chrome · 完整瀏覽器 · Phoenix 原生 IP · 支援登入、影片、擴充功能</span>
+      <div class="flex gap-2">
+        <button id="btnBrowserOpen" class="text-xs px-3 py-1 bg-emerald-600 text-white rounded">新分頁全螢幕</button>
+        <button id="btnBrowserFs" class="text-xs px-3 py-1 border rounded">全螢幕</button>
+      </div>
+    </div>
+    <div id="browserInfo" class="px-4 py-2 bg-amber-50 text-xs text-amber-900 border-b">首次打開會彈出登入：帳號 <span class="mono bg-white px-1 py-0.5 rounded border">abc</span> 密碼 <span class="mono bg-white px-1 py-0.5 rounded border">phoenix2026</span> · 像本地 Chrome 一樣可登入 Google、看 YouTube、開多分頁</div>
+    <iframe id="browserFrame" class="w-full h-full border-0 bg-white" allow="clipboard-read; clipboard-write; fullscreen" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe>
+  </div>
   <div id="log" class="mt-3 mono text-xs bg-zinc-900 text-zinc-300 p-3 rounded-xl max-h-28 overflow-auto">就緒。輸入網址按「以美國 IP 打開」。</div>
 </div>
 <script>
-let PROXY = "", TOKEN = "phoenix2026", enabled = true;
+let PROXY = "", TOKEN = "phoenix2026", BROWSER = "", enabled = true;
 async function loadTunnel(){
   try{
     const r = await fetch('./tunnel.json?_=' + Date.now());
     const j = await r.json();
-    PROXY = j.url; TOKEN = j.token;
-    document.getElementById('via').textContent = 'via ' + PROXY;
+    PROXY = j.url; TOKEN = j.token; BROWSER = j.browser || "https://acceptance-washer-rank-bonds.trycloudflare.com";
+    document.getElementById('via').textContent = 'via ' + PROXY + ' | 瀏覽器 ' + BROWSER;
+    document.getElementById('browserFrame').src = BROWSER;
   }catch(e){
     PROXY = "https://allowed-childhood-improvement-manual.trycloudflare.com";
+    BROWSER = "https://acceptance-washer-rank-bonds.trycloudflare.com";
     document.getElementById('via').textContent = 'via ' + PROXY + ' (fallback)';
+    document.getElementById('browserFrame').src = BROWSER;
   }
   check();
 }
@@ -146,6 +170,21 @@ document.querySelectorAll('.quick').forEach(b=>{
   b.onclick = ()=>{ document.getElementById('url').value = b.dataset.url.replace('https://',''); document.getElementById('btnGo').click(); };
 });
 document.getElementById('url').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('btnGo').click(); });
+document.getElementById('tabProxy').onclick = ()=>{
+  document.getElementById('panelProxy').classList.remove('hidden');
+  document.getElementById('panelBrowser').classList.add('hidden');
+  document.getElementById('tabProxy').className='px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-bold';
+  document.getElementById('tabBrowser').className='px-4 py-2 bg-white border rounded-xl text-sm';
+};
+document.getElementById('tabBrowser').onclick = ()=>{
+  document.getElementById('panelProxy').classList.add('hidden');
+  document.getElementById('panelBrowser').classList.remove('hidden');
+  document.getElementById('tabProxy').className='px-4 py-2 bg-white border rounded-xl text-sm';
+  document.getElementById('tabBrowser').className='px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-bold';
+  if(!document.getElementById('browserFrame').src) document.getElementById('browserFrame').src = BROWSER;
+};
+document.getElementById('btnBrowserOpen').onclick = ()=>{ window.open(BROWSER, '_blank'); };
+document.getElementById('btnBrowserFs').onclick = ()=>{ const f=document.getElementById('browserFrame'); if(f.requestFullscreen) f.requestFullscreen(); };
 loadTunnel(); setInterval(check, 10000);
 </script>
 </body>
