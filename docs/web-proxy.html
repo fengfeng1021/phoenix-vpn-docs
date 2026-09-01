@@ -81,6 +81,7 @@
     <div class="px-4 py-2 bg-emerald-50 border-b flex items-center justify-between">
       <span class="text-xs text-emerald-800">☁ 雲端 Chrome · 完整瀏覽器 · Phoenix 原生 IP · 支援登入、影片、擴充功能</span>
       <div class="flex gap-2">
+        <button id="btnBrowserFresh" class="text-xs px-3 py-1 bg-amber-500 text-white rounded">全新會話</button>
         <button id="btnBrowserOpen" class="text-xs px-3 py-1 bg-emerald-600 text-white rounded">新分頁全螢幕</button>
         <button id="btnBrowserFs" class="text-xs px-3 py-1 border rounded">全螢幕</button>
       </div>
@@ -98,12 +99,11 @@ async function loadTunnel(){
     const j = await r.json();
     PROXY = j.url; TOKEN = j.token; BROWSER = j.browser || "https://acceptance-washer-rank-bonds.trycloudflare.com";
     document.getElementById('via').textContent = 'via ' + PROXY + ' | 瀏覽器 ' + BROWSER;
-    document.getElementById('browserFrame').src = BROWSER;
+    // 瀏覽器不自動載入，點分頁時才全新載入
   }catch(e){
     PROXY = "https://allowed-childhood-improvement-manual.trycloudflare.com";
     BROWSER = "https://acceptance-washer-rank-bonds.trycloudflare.com";
     document.getElementById('via').textContent = 'via ' + PROXY + ' (fallback)';
-    document.getElementById('browserFrame').src = BROWSER;
   }
   check();
 }
@@ -176,15 +176,27 @@ document.getElementById('tabProxy').onclick = ()=>{
   document.getElementById('tabProxy').className='px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-bold';
   document.getElementById('tabBrowser').className='px-4 py-2 bg-white border rounded-xl text-sm';
 };
-document.getElementById('tabBrowser').onclick = ()=>{
+document.getElementById('tabBrowser').onclick = async ()=>{
   document.getElementById('panelProxy').classList.add('hidden');
   document.getElementById('panelBrowser').classList.remove('hidden');
   document.getElementById('tabProxy').className='px-4 py-2 bg-white border rounded-xl text-sm';
   document.getElementById('tabBrowser').className='px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-bold';
-  if(!document.getElementById('browserFrame').src) document.getElementById('browserFrame').src = BROWSER;
+  // 每次打開都是全新會話：先清 cookie 再載入
+  try{
+    document.getElementById('browserInfo').textContent = '正在準備全新會話（清除上次 cookie）...';
+    await fetch(PROXY + '/browser/fresh?token=' + TOKEN, {method: 'GET'});
+    await new Promise(r=>setTimeout(r, 3000));
+    document.getElementById('browserInfo').textContent = '已是全新會話：帳號 fengfeng1021 密碼 請私訊（不在 GitHub 顯示）· 像本地 Chrome 一樣可登入';
+  }catch(e){ document.getElementById('browserInfo').textContent = '全新會話準備中...'; }
+  document.getElementById('browserFrame').src = BROWSER + '?t=' + Date.now();
 };
 document.getElementById('btnBrowserOpen').onclick = ()=>{ window.open(BROWSER, '_blank'); };
 document.getElementById('btnBrowserFs').onclick = ()=>{ const f=document.getElementById('browserFrame'); if(f.requestFullscreen) f.requestFullscreen(); };
+document.getElementById('btnBrowserFresh').onclick = async ()=>{
+  document.getElementById('browserInfo').textContent = '正在清除並重啟瀏覽器...';
+  try{ await fetch(PROXY + '/browser/fresh?token=' + TOKEN); }catch(e){}
+  setTimeout(()=>{ document.getElementById('browserFrame').src = BROWSER + '?t=' + Date.now(); document.getElementById('browserInfo').textContent = '已是全新會話（無痕模式，自動清除 cookie）'; }, 3500);
+};
 loadTunnel(); setInterval(check, 10000);
 </script>
 </body>
