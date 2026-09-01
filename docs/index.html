@@ -80,20 +80,24 @@
 
     <!-- Quick Start -->
     <section id="quickstart" class="mt-8">
-      <h2 class="text-xl font-bold">快速連線</h2>
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex gap-3 mb-4">
+        <div class="text-emerald-600">✓</div>
+        <div class="text-sm text-emerald-900"><b>已驗證連通</b> · 透過 D 槽 sing-box 測試 IP 已切換至 <span class="mono bg-white px-1.5 py-0.5 rounded border">129.146.115.218 Phoenix, US</span>，OCI 防火牆已修復（UDP 51820 / FORWARD）</div>
+      </div>
+      <h2 class="text-xl font-bold">快速連線（推薦 D 槽免安裝）</h2>
       <div class="grid md:grid-cols-2 gap-4 mt-4">
         <div class="bg-white rounded-xl border border-zinc-200 p-6">
-          <h3 class="font-semibold flex items-center gap-2">🖥 Windows <span class="text-xs font-normal px-2 py-0.5 bg-zinc-100 rounded">已安裝到 D 槽</span></h3>
+          <h3 class="font-semibold flex items-center gap-2">🖥 Windows <span class="text-xs font-normal px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded">sing-box 免驅動 · D 槽</span></h3>
           <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
-            <li>安裝程式在 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">D:\Installers\wireguard.msi</span> 已安裝到 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">C:\Program Files\WireGuard</span>（僅 9 MB，含驅動必須在 C 槽，已備份 exe 到 <span class="mono">D:\WireGuard\</span>）</li>
-            <li>打開 <b>WireGuard</b> → 點 <b>Add Tunnel</b> → <b>Import tunnel from file</b></li>
-            <li>選擇 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</span></li>
-            <li>點 <b>Activate</b>，狀態變綠色即連上美國</li>
-            <li>瀏覽器開 <a href="https://whoer.net" class="underline">whoer.net</a> 確認顯示 Phoenix, US</li>
+            <li>免安裝，已解壓到 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">D:\NekoBox\sing-box.exe</span>（81 MB，用戶態，無需 WireGuard 驅動，不佔 C 槽）</li>
+            <li>雙擊 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">D:\NekoBox\start.bat</span> 啟動，看到 <span class="mono">mixed-in listening on 127.0.0.1:2080</span></li>
+            <li>雙擊 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">D:\NekoBox\enable-proxy.bat</span> 一鍵設系統代理為 <span class="mono">127.0.0.1:2080</span>（或手動在瀏覽器設 HTTP/SOCKS5 代理）</li>
+            <li>瀏覽器開 <a href="https://whoer.net" class="underline">whoer.net</a> 確認顯示 Phoenix, US；關閉時執行 <span class="mono">disable-proxy.bat</span> + <span class="mono">stop.bat</span></li>
+            <li>備用：原生 WireGuard 設定檔仍在 <span class="mono">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</span>，可用官方客戶端匯入（需驅動，已安裝在 <span class="mono">C:\Program Files\WireGuard</span> 但曾因驅動缺失改用 sing-box）</li>
           </ol>
           <div class="mt-4 p-3 bg-zinc-50 rounded-lg border mono text-xs">
-            備用啟動（Portable）：<br>
-            D:\WireGuard\wireguard.exe /installtunnelservice D:\WireGuard\wireguard-us-phoenix.conf
+            手動測試：Invoke-WebRequest -Proxy http://127.0.0.1:2080 https://ipinfo.io/json<br>
+            應回傳 "country":"US" "city":"Phoenix"
           </div>
         </div>
         <div class="bg-white rounded-xl border border-zinc-200 p-6">
@@ -111,11 +115,18 @@
 
     <!-- Config Location -->
     <section id="config" class="mt-8 bg-white rounded-xl border border-zinc-200 p-6">
-      <h2 class="font-bold">本機檔案位置總覽</h2>
+      <h2 class="font-bold">本機檔案位置總覽（全部在 D 槽）</h2>
       <div class="mt-4 grid md:grid-cols-2 gap-4 mono text-xs">
         <div class="space-y-2">
+          <div class="p-3 bg-emerald-50 rounded border border-emerald-200">
+            <div class="text-emerald-700 font-semibold">★ 推薦：sing-box（已驗證）</div>
+            <div class="font-semibold text-sm mt-1">D:\NekoBox\sing-box.exe</div>
+            <div>D:\NekoBox\config.json（WireGuard endpoint 已配置）</div>
+            <div>D:\NekoBox\start.bat / stop.bat / enable-proxy.bat / disable-proxy.bat</div>
+            <div class="text-zinc-600">代理：127.0.0.1:2080</div>
+          </div>
           <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">WireGuard 設定檔（客戶端）</div>
+            <div class="text-zinc-500">WireGuard 原生設定檔（備用）</div>
             <div class="font-semibold text-sm mt-1">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</div>
             <div>D:\opencode默認專案\tmp\opencode\wireguard-us-phoenix.conf</div>
           </div>
@@ -127,15 +138,16 @@
         </div>
         <div class="space-y-2">
           <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">WireGuard 安裝檔</div>
-            <div class="font-semibold text-sm mt-1">D:\Installers\wireguard.msi</div>
-            <div>D:\Installers\wireguard-installer.exe</div>
-            <div>執行檔備份：D:\WireGuard\wireguard.exe</div>
+            <div class="text-zinc-500">WireGuard 官方客戶端（已安裝，僅 9MB）</div>
+            <div class="font-semibold text-sm mt-1">C:\Program Files\WireGuard\wireguard.exe</div>
+            <div>D:\Installers\wireguard.msi / D:\WireGuard\wireguard.exe (備份)</div>
+            <div class="text-amber-700">註：曾因驅動未安裝（1.1 版衝突）改用 sing-box 用戶態方案</div>
           </div>
           <div class="p-3 bg-zinc-50 rounded border">
             <div class="text-zinc-500">伺服器 SSH</div>
             <div class="font-semibold text-sm mt-1">ssh -i ~/.ssh/vpn-us-phoenix ubuntu@129.146.115.218</div>
-            <div>sudo wg show 查看連線</div>
+            <div>sudo wg show / sudo iptables -L -n 查看防火牆</div>
+            <div>已修復：INPUT 51820/UDP + FORWARD wg0</div>
           </div>
         </div>
       </div>
