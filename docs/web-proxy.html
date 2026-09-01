@@ -92,17 +92,30 @@
   <div id="log" class="mt-3 mono text-xs bg-zinc-900 text-zinc-300 p-3 rounded-xl max-h-28 overflow-auto">就緒。輸入網址按「以美國 IP 打開」。</div>
 </div>
 <script>
-let PROXY = "", TOKEN = "phoenix2026", BROWSER = "", enabled = true;
+let PROXY = "https://129-146-115-218.sslip.io", TOKEN = "phoenix2026", BROWSER = "https://acceptance-washer-rank-bonds.trycloudflare.com", enabled = true;
+let AUTH = localStorage.getItem('phoenix_auth') || "";
 async function loadTunnel(){
+  // 需密碼才回傳真實 Tunnel，否則用穩定域名直接代理
   try{
-    const r = await fetch('./tunnel.json?_=' + Date.now());
-    const j = await r.json();
-    PROXY = j.url; TOKEN = j.token; BROWSER = j.browser || "https://acceptance-washer-rank-bonds.trycloudflare.com";
+    if(!AUTH){
+      const p = prompt('請輸入 Phoenix 密碼（私訊取得）：', '');
+      if(p) { AUTH = p; localStorage.setItem('phoenix_auth', p); }
+    }
+    if(AUTH){
+      try{
+        const r = await fetch('https://129-146-115-218.sslip.io/tunnel?auth=' + encodeURIComponent(AUTH));
+        if(r.ok){
+          const j = await r.json();
+          // PROXY 已是穩定域名，不覆蓋；只更新 BROWSER 和 TOKEN
+          BROWSER = j.browser || BROWSER; TOKEN = j.token || TOKEN;
+        } else {
+          alert('密碼錯誤或 Tunnel 未就緒');
+          localStorage.removeItem('phoenix_auth'); AUTH = "";
+        }
+      }catch(e){ console.log(e); }
+    }
     document.getElementById('via').textContent = 'via ' + PROXY + ' | 瀏覽器 ' + BROWSER;
-    // 瀏覽器不自動載入，點分頁時才全新載入
   }catch(e){
-    PROXY = "https://allowed-childhood-improvement-manual.trycloudflare.com";
-    BROWSER = "https://acceptance-washer-rank-bonds.trycloudflare.com";
     document.getElementById('via').textContent = 'via ' + PROXY + ' (fallback)';
   }
   check();
