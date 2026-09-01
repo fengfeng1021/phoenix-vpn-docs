@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix VPN 控制台</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans TC',system-ui} .mono{font-family:'JetBrains Mono',monospace}</style>
+</head>
+<body class="bg-[#fafaf9] min-h-screen">
+<div class="max-w-3xl mx-auto p-6">
+  <div class="bg-zinc-900 text-white rounded-2xl p-7 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-cyan-500/20"></div>
+    <div class="relative">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-white text-zinc-900 grid place-items-center font-bold">US</div>
+          <div>
+            <div class="font-bold">Phoenix VPN 一鍵控制台</div>
+            <div class="text-xs text-zinc-400">127.0.0.1:2080 · 129.146.115.218</div>
+          </div>
+        </div>
+        <div id="dot" class="px-3 py-1 rounded-full text-xs bg-zinc-800 border border-white/20">檢測中...</div>
+      </div>
+      <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+        <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+          <div class="text-xs text-zinc-400">當前 IP</div>
+          <div id="ip" class="mono font-bold mt-1">--</div>
+          <div id="loc" class="text-xs text-zinc-400">--</div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+          <div class="text-xs text-zinc-400">節點</div>
+          <div class="font-bold mt-1">Phoenix, US</div>
+          <div class="text-xs text-emerald-300">● 乾淨原生 IP</div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+          <div class="text-xs text-zinc-400">狀態</div>
+          <div id="status" class="font-bold mt-1">--</div>
+          <div id="proxy" class="text-xs text-zinc-400">--</div>
+        </div>
+      </div>
+      <div class="mt-6 flex gap-3">
+        <button id="btnOne" class="flex-1 py-3 bg-white text-zinc-900 rounded-xl font-bold hover:bg-zinc-100">一鍵啟動美國 VPN</button>
+        <button id="btnStop" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20">停止</button>
+      </div>
+      <div class="mt-3 flex gap-2 text-xs">
+        <button id="btnProxyOn" class="px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20">啟用系統代理</button>
+        <button id="btnProxyOff" class="px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20">停用代理</button>
+        <button id="btnCheck" class="px-3 py-1.5 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20">刷新 IP</button>
+        <a href="https://fengfeng1021.github.io/phoenix-vpn-docs/" target="_blank" class="ml-auto text-zinc-400 hover:text-white underline">GitHub Page 文檔 →</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="log" class="mt-4 bg-white border border-zinc-200 rounded-xl p-4 mono text-xs text-zinc-600 max-h-40 overflow-auto">等待操作...</div>
+
+  <div class="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900">
+    <b>如何通過 GitHub Page 一鍵啟動？</b><br>
+    1. 在本機雙擊 <span class="mono bg-white px-1 py-0.5 rounded border">D:\NekoBox\control.bat</span>（已幫你建好，會啟動本控制台在 <span class="mono">http://127.0.0.1:8766</span>）<br>
+    2. 再打開 <a href="https://fengfeng1021.github.io/phoenix-vpn-docs/" class="underline">GitHub Page</a>，頁面頂部的按鈕會自動連到 <span class="mono">127.0.0.1:8766</span>，實現一鍵啟動。瀏覽器若攔截混合內容，請直接用 <a href="http://127.0.0.1:8766" class="underline">http://127.0.0.1:8766</a> 本地控制台（一模一樣的界面）。
+  </div>
+</div>
+<script>
+const API = location.hostname === '127.0.0.1' || location.hostname === 'localhost' ? '' : 'http://127.0.0.1:8766';
+const $ = s => document.getElementById(s);
+function log(t){ $('log').textContent = new Date().toLocaleTimeString() + '  ' + t + '\n' + $('log').textContent; }
+async function api(path, opts={}){
+  const url = API + path;
+  try{
+    const r = await fetch(url, {...opts, headers:{'Content-Type':'application/json'}});
+    return await r.json();
+  }catch(e){ log('API 失敗 ' + url + ' -> 請先啟動 D:\\NekoBox\\control.bat'); throw e; }
+}
+async function refresh(){
+  try{
+    const s = await api('/api/status');
+    const isUS = s.singbox && s.proxy;
+    $('dot').textContent = s.singbox ? (s.proxy ? '● 已連接美國' : '● 已啟動未代理') : '○ 未啟動';
+    $('dot').className = s.singbox ? 'px-3 py-1 rounded-full text-xs bg-emerald-500 text-white' : 'px-3 py-1 rounded-full text-xs bg-zinc-800 text-zinc-300 border border-white/20';
+    $('status').textContent = s.singbox ? '運行中' : '已停止';
+    $('proxy').textContent = s.proxy ? '系統代理已啟用' : '系統代理未啟用';
+    // 查 IP
+    const ip = await api('/api/ip' + (s.proxy ? '?proxy=1' : ''));
+    if(ip.ip){ $('ip').textContent = ip.ip; $('loc').textContent = (ip.city||'') + ' ' + (ip.country||''); if(ip.country==='US') $('loc').textContent += ' ✓'; }
+    else if(ip.error) { $('ip').textContent = '錯誤'; $('loc').textContent = ip.error.slice(0,30); }
+  }catch{}
+}
+$('btnOne').onclick = async ()=>{
+  log('一鍵啟動中...');
+  $('btnOne').disabled=true; $('btnOne').textContent='啟動中...';
+  try{ const r = await api('/api/onekey', {method:'POST'}); log('結果: ' + JSON.stringify(r)); if(r.ip) { $('ip').textContent=r.ip.ip; $('loc').textContent=r.ip.city+' '+r.ip.country; } }catch(e){ log('失敗，請先啟動 control.bat'); }
+  $('btnOne').disabled=false; $('btnOne').textContent='一鍵啟動美國 VPN';
+  refresh();
+};
+$('btnStop').onclick = async ()=>{ log('停止...'); await api('/api/stop',{method:'POST'}); refresh(); };
+$('btnProxyOn').onclick = async ()=>{ await api('/api/proxy/enable',{method:'POST'}); log('已啟用代理'); refresh(); };
+$('btnProxyOff').onclick = async ()=>{ await api('/api/proxy/disable',{method:'POST'}); log('已停用代理'); refresh(); };
+$('btnCheck').onclick = refresh;
+refresh(); setInterval(refresh, 4000);
+</script>
+</body>
+</html>
