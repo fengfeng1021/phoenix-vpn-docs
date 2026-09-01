@@ -3,262 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>US Phoenix VPN - 部署記錄</title>
-<meta name="description" content="Oracle Cloud Always Free - US West Phoenix WireGuard VPN 部署文檔">
+<title>Phoenix 雲端 Chrome · 美國原生</title>
+<meta name="description" content="Phoenix 雲端瀏覽器 - 1920x1080 120fps 無痕">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  body{font-family:'Noto Sans TC',system-ui,sans-serif}
-  .mono{font-family:'JetBrains Mono',monospace}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans TC',system-ui}.mono{font-family:'JetBrains Mono',monospace}</style>
 </head>
 <body class="bg-[#fafaf9] text-zinc-900 antialiased">
-  <!-- Nav -->
-  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-zinc-200">
-    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white grid place-items-center text-sm font-bold">US</div>
-        <span class="font-semibold">Phoenix VPN Docs</span>
-        <span class="hidden sm:inline text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full">● Running</span>
-      </div>
-      <div class="text-xs text-zinc-500">2026-09-01 部署 · Oracle Always Free</div>
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-zinc-200">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white grid place-items-center text-sm font-bold">US</div>
+      <span class="font-semibold">Phoenix 雲端 Chrome</span>
+      <span class="hidden sm:inline text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full">● Running</span>
     </div>
-  </nav>
-
-  <main class="max-w-5xl mx-auto px-6 py-8">
-    <!-- Hero -->
-    <div class="bg-zinc-900 text-white rounded-2xl p-8 md:p-10 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-transparent to-cyan-500/20"></div>
-      <div class="relative">
-        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 bg-white/10 rounded-full border border-white/20 mb-4">
-          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> US West (Phoenix) · us-phoenix-1 · PHX-AD-1
-        </div>
-        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">美國乾淨節點部署記錄</h1>
-        <p class="mt-3 text-zinc-400 max-w-2xl">Oracle Cloud Always Free · WireGuard · 原生美國 IP · 私有節點僅一人使用，Fraud Score 接近 0</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="./dashboard.html" class="px-5 py-2.5 bg-emerald-500 text-white rounded-lg text-sm font-bold hover:bg-emerald-600">▶ 一鍵控制台</a>
-          <a href="#control" class="px-5 py-2.5 bg-white text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-100">快速連線</a>
-          <a href="#config" class="px-5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-sm hover:bg-white/20">查看設定檔位置</a>
-        </div>
-        <div class="mt-3 text-xs text-zinc-300">★ 新：<a href="./web-proxy.html" class="underline text-emerald-300">零安裝網頁代理（任何電腦直接用）</a> · 本地控制台：<span class="mono bg-white/10 px-2 py-1 rounded">http://127.0.0.1:8766</span></div>
+    <div class="text-xs text-zinc-500">129.146.115.218 · Phoenix · 1920x1080 120fps</div>
+  </div>
+</nav>
+<main class="max-w-5xl mx-auto px-6 py-8">
+  <div class="bg-zinc-900 text-white rounded-2xl p-8 md:p-10 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-transparent to-cyan-500/20"></div>
+    <div class="relative">
+      <div class="inline-flex items-center gap-2 text-xs px-3 py-1 bg-white/10 rounded-full border border-white/20 mb-4">
+        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> 雲端瀏覽器 · 任何電腦零安裝 · 無痕
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">像本地一樣的美國 Chrome</h1>
+      <p class="mt-3 text-zinc-400 max-w-2xl">Phoenix 4 OCPU 24GB · 原生美國 IP · 1920x1080 120fps · 每次全新會話 · 帳號 fengfeng1021</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="./web-proxy.html" class="px-6 py-3 bg-emerald-500 text-white rounded-xl text-sm font-bold hover:bg-emerald-600">▶ 立即打開雲端 Chrome</a>
+        <span class="px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-sm">帳號 fengfeng1021 · 密碼私訊</span>
       </div>
     </div>
+  </div>
 
-    <!-- 一鍵控制台（嵌入） -->
-    <section id="control" class="mt-6 bg-white border border-zinc-200 rounded-2xl p-6">
-      <div class="flex items-center justify-between">
-        <h2 class="font-bold">一鍵可視化控制台</h2>
-        <span id="ctl-dot" class="text-xs px-3 py-1 rounded-full bg-zinc-100 border">檢測中...</span>
-      </div>
-      <div class="mt-4 grid grid-cols-3 gap-3 text-center">
-        <div class="bg-zinc-50 rounded-xl p-3 border">
-          <div class="text-xs text-zinc-500">當前 IP</div>
-          <div id="ctl-ip" class="mono font-bold">--</div>
-          <div id="ctl-loc" class="text-xs text-zinc-500">--</div>
-        </div>
-        <div class="bg-zinc-50 rounded-xl p-3 border">
-          <div class="text-xs text-zinc-500">sing-box</div>
-          <div id="ctl-status" class="font-bold">--</div>
-          <div id="ctl-proxy" class="text-xs text-zinc-500">--</div>
-        </div>
-        <div class="bg-zinc-50 rounded-xl p-3 border">
-          <div class="text-xs text-zinc-500">節點</div>
-          <div class="font-bold">Phoenix, US</div>
-          <div class="text-xs text-emerald-600">129.146.115.218</div>
-        </div>
-      </div>
-      <div class="mt-4 flex gap-3">
-        <button id="ctl-one" class="flex-1 py-3 bg-zinc-900 text-white rounded-xl font-bold hover:bg-black">一鍵啟動美國 VPN</button>
-        <button id="ctl-stop" class="px-6 py-3 border border-zinc-200 rounded-xl hover:bg-zinc-50">停止</button>
-      </div>
-      <div class="mt-3 flex gap-2 text-xs">
-        <button id="ctl-pon" class="px-3 py-1.5 border rounded-lg hover:bg-zinc-50">啟用代理</button>
-        <button id="ctl-poff" class="px-3 py-1.5 border rounded-lg hover:bg-zinc-50">停用代理</button>
-        <button id="ctl-check" class="px-3 py-1.5 border rounded-lg hover:bg-zinc-50">刷新</button>
-        <a href="./dashboard.html" class="ml-auto underline text-zinc-500">打開獨立控制台 →</a>
-        <a href="http://127.0.0.1:8766" class="underline text-zinc-500">本地 http://127.0.0.1:8766 →</a>
-      </div>
-      <div id="ctl-log" class="mt-3 mono text-xs bg-zinc-900 text-zinc-300 p-3 rounded-lg max-h-28 overflow-auto">等待操作... 需先在本地雙擊 D:\NekoBox\control.bat 啟動控制後端</div>
-      <script>
-      (function(){
-        const API = 'http://127.0.0.1:8766';
-        const $ = id => document.getElementById(id);
-        const log = t => { const el=$('ctl-log'); el.textContent = new Date().toLocaleTimeString()+'  '+t+'\n'+el.textContent; };
-        async function api(p,o={}){ const r=await fetch(API+p,{...o,headers:{'Content-Type':'application/json'}}); return r.json(); }
-        async function refresh(){
-          try{
-            const s=await api('/api/status'); $('ctl-dot').textContent=s.singbox?(s.proxy?'● 已連接美國':'● 已啟動'):'○ 未啟動'; $('ctl-dot').className=s.singbox?'text-xs px-3 py-1 rounded-full bg-emerald-500 text-white':'text-xs px-3 py-1 rounded-full bg-zinc-100 border';
-            $('ctl-status').textContent=s.singbox?'運行中':'已停止'; $('ctl-proxy').textContent=s.proxy?'代理已啟用':'代理未啟用';
-            const ip=await api('/api/ip'+(s.proxy?'?proxy=1':'')); if(ip.ip){$('ctl-ip').textContent=ip.ip; $('ctl-loc').textContent=(ip.city||'')+' '+ (ip.country||'');}
-          }catch(e){ $('ctl-dot').textContent='● 未連到本地後端'; $('ctl-dot').className='text-xs px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200'; log('未連到 http://127.0.0.1:8766，請先執行 D:\\NekoBox\\control.bat'); }
-        }
-        $('ctl-one').onclick=async()=>{ log('一鍵啟動...'); $('ctl-one').disabled=true; try{ const r=await api('/api/onekey',{method:'POST'}); log(JSON.stringify(r)); }catch(e){ log('失敗：'+e); } $('ctl-one').disabled=false; refresh(); };
-        $('ctl-stop').onclick=async()=>{ await api('/api/stop',{method:'POST'}); log('已停止'); refresh(); };
-        $('ctl-pon').onclick=async()=>{ await api('/api/proxy/enable',{method:'POST'}); log('代理已啟用'); refresh(); };
-        $('ctl-poff').onclick=async()=>{ await api('/api/proxy/disable',{method:'POST'}); log('代理已停用'); refresh(); };
-        $('ctl-check').onclick=refresh;
-        refresh(); setInterval(refresh,4000);
-      })();
-      </script>
-    </section>
-
-    <!-- Info Grid -->
-    <div class="grid md:grid-cols-3 gap-4 mt-6">
-      <div class="bg-white rounded-xl border border-zinc-200 p-5">
-        <div class="text-xs text-zinc-500 uppercase tracking-wider">Public IP</div>
-        <div class="mono text-lg font-semibold mt-1">129.146.115.218</div>
-        <div class="text-xs text-zinc-500 mt-1">Phoenix, AZ · AS31898 Oracle</div>
-        <div class="mt-3 flex gap-2">
-          <a href="https://ipinfo.io/129.146.115.218" target="_blank" class="text-xs px-2 py-1 bg-zinc-900 text-white rounded">ipinfo.io</a>
-          <a href="https://whoer.net" target="_blank" class="text-xs px-2 py-1 border border-zinc-200 rounded">whoer.net 檢測</a>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl border border-zinc-200 p-5">
-        <div class="text-xs text-zinc-500 uppercase tracking-wider">主機規格</div>
-        <div class="font-semibold mt-1">VM.Standard.A1.Flex</div>
-        <div class="text-sm text-zinc-600">4 OCPU · 24 GB RAM · 50 GB Boot</div>
-        <div class="text-xs text-zinc-500 mt-2">Ubuntu 22.04 ARM64 · Always Free</div>
-        <div class="mono text-xs mt-2 px-2 py-1 bg-zinc-50 rounded border">vpn-us-phoenix · vpn-vcn 10.0.0.0/16</div>
-      </div>
-      <div class="bg-white rounded-xl border border-zinc-200 p-5">
-        <div class="text-xs text-zinc-500 uppercase tracking-wider">VPN 類型</div>
-        <div class="font-semibold mt-1">WireGuard · UDP 51820</div>
-        <div class="text-sm text-zinc-600">10.66.66.0/24 · fd42:42:42::/64</div>
-        <div class="text-xs text-zinc-500 mt-2">DNS 1.1.1.1 / 8.8.8.8 · MTU 1280</div>
-        <span class="inline-block mt-2 text-xs px-2 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200">● wg0 Active</span>
-      </div>
+  <div class="grid md:grid-cols-3 gap-4 mt-6">
+    <div class="bg-white rounded-xl border p-5 text-center">
+      <div class="text-xs text-zinc-500">節點 IP</div>
+      <div class="mono font-bold mt-1">129.146.115.218</div>
+      <div class="text-xs text-emerald-600">● Phoenix, US · 乾淨原生</div>
     </div>
-
-    <!-- Warning -->
-    <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
-      <div class="text-amber-600 text-lg">⚠</div>
-      <div class="text-sm">
-        <div class="font-semibold text-amber-900">私鑰不會上傳到 GitHub</div>
-        <div class="text-amber-800 mt-1">此頁面為公開文檔，<b>不會</b>包含 PrivateKey / PresharedKey。完整設定檔請從本機取得：<span class="mono bg-white px-1.5 py-0.5 rounded border">Desktop\wireguard-us-phoenix.conf</span> 和 <span class="mono bg-white px-1.5 py-0.5 rounded border">D:\WireGuard\</span> 私鑰檔案 <span class="mono bg-white px-1.5 py-0.5 rounded border">C:\Users\Administrator\.ssh\vpn-us-phoenix</span> 切勿上傳。</div>
-      </div>
+    <div class="bg-white rounded-xl border p-5 text-center">
+      <div class="text-xs text-zinc-500">規格</div>
+      <div class="font-bold mt-1">1920x1080 · 120fps · 30Mbps</div>
+      <div class="text-xs text-zinc-500">x264enc · 無痕自動清除</div>
     </div>
+    <div class="bg-white rounded-xl border p-5 text-center">
+      <div class="text-xs text-zinc-500">喚醒</div>
+      <div class="font-bold mt-1">每 30 分鐘自動</div>
+      <div class="text-xs text-zinc-500">含 CPU 壓測 · 永久免費額度內</div>
+    </div>
+  </div>
 
-    <!-- Quick Start -->
-    <section id="quickstart" class="mt-8">
-      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex gap-3 mb-4">
-        <div class="text-emerald-600">✓</div>
-        <div class="text-sm text-emerald-900"><b>已驗證連通</b> · 透過 D 槽 sing-box 測試 IP 已切換至 <span class="mono bg-white px-1.5 py-0.5 rounded border">129.146.115.218 Phoenix, US</span>，OCI 防火牆已修復（UDP 51820 / FORWARD）</div>
-      </div>
-      <h2 class="text-xl font-bold">快速連線（推薦 D 槽免安裝）</h2>
-      <div class="grid md:grid-cols-2 gap-4 mt-4">
-        <div class="bg-white rounded-xl border border-zinc-200 p-6">
-          <h3 class="font-semibold flex items-center gap-2">🖥 Windows <span class="text-xs font-normal px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded">sing-box 免驅動 · D 槽</span></h3>
-          <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
-            <li>免安裝，已解壓到 <span class="mono text-xs bg-zinc-50 px-1 py-0.5 rounded">D:\NekoBox\sing-box.exe</span>（81 MB，用戶態，無需 WireGuard 驅動，不佔 C 槽）</li>
-            <li>雙擊 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">D:\NekoBox\start.bat</span> 啟動，看到 <span class="mono">mixed-in listening on 127.0.0.1:2080</span></li>
-            <li>雙擊 <span class="mono bg-zinc-900 text-white px-1.5 py-0.5 rounded text-xs">D:\NekoBox\enable-proxy.bat</span> 一鍵設系統代理為 <span class="mono">127.0.0.1:2080</span>（或手動在瀏覽器設 HTTP/SOCKS5 代理）</li>
-            <li>瀏覽器開 <a href="https://whoer.net" class="underline">whoer.net</a> 確認顯示 Phoenix, US；關閉時執行 <span class="mono">disable-proxy.bat</span> + <span class="mono">stop.bat</span></li>
-            <li>備用：原生 WireGuard 設定檔仍在 <span class="mono">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</span>，可用官方客戶端匯入（需驅動，已安裝在 <span class="mono">C:\Program Files\WireGuard</span> 但曾因驅動缺失改用 sing-box）</li>
-          </ol>
-          <div class="mt-4 p-3 bg-zinc-50 rounded-lg border mono text-xs">
-            手動測試：Invoke-WebRequest -Proxy http://127.0.0.1:2080 https://ipinfo.io/json<br>
-            應回傳 "country":"US" "city":"Phoenix"
-          </div>
-        </div>
-        <div class="bg-white rounded-xl border border-zinc-200 p-6">
-          <h3 class="font-semibold">📱 手機 / 平板</h3>
-          <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
-            <li>App Store / Play Store 搜 <b>WireGuard</b> 安裝</li>
-            <li>點 <b>+</b> → <b>Create from file or archive</b> → 匯入同一個 <span class="mono">.conf</span></li>
-            <li>或在電腦用 <span class="mono bg-zinc-50 px-1 py-0.5 rounded">qrencode</span> 掃 QR 匯入（部署時已產生）</li>
-            <li>開啟開關，允許 VPN 配置</li>
-          </ol>
-          <div class="mt-4 text-xs text-zinc-500">同一個設定檔可在多裝置匯入，但不要同時連線同一 Peer，會互搶。需多裝置請在伺服器新增 Peer。</div>
-        </div>
-      </div>
-    </section>
+  <div class="mt-6 bg-white border rounded-xl p-5">
+    <h3 class="font-bold">怎麼用（零本機依賴）</h3>
+    <ol class="mt-3 text-sm space-y-2 list-decimal list-inside text-zinc-700">
+      <li>打開 <a href="./web-proxy.html" class="underline font-bold text-emerald-600">web-proxy.html</a> → 點「雲端 Chrome」分頁 → 輸入帳號 <span class="mono bg-zinc-100 px-1 py-0.5 rounded">fengfeng1021</span> 密碼（私訊）</li>
+      <li>每次打開會自動 <span class="mono bg-zinc-100 px-1 py-0.5 rounded">rm -rf /config/.config/mozilla && docker restart</span>，保證全新無痕</li>
+      <li>關閉分頁即丟棄，不留 cookie</li>
+    </ol>
+  </div>
 
-    <!-- Config Location -->
-    <section id="config" class="mt-8 bg-white rounded-xl border border-zinc-200 p-6">
-      <h2 class="font-bold">本機檔案位置總覽（全部在 D 槽）</h2>
-      <div class="mt-4 grid md:grid-cols-2 gap-4 mono text-xs">
-        <div class="space-y-2">
-          <div class="p-3 bg-emerald-50 rounded border border-emerald-200">
-            <div class="text-emerald-700 font-semibold">★ 推薦：sing-box（已驗證）</div>
-            <div class="font-semibold text-sm mt-1">D:\NekoBox\sing-box.exe</div>
-            <div>D:\NekoBox\config.json（WireGuard endpoint 已配置）</div>
-            <div>D:\NekoBox\start.bat / stop.bat / enable-proxy.bat / disable-proxy.bat</div>
-            <div class="text-zinc-600">代理：127.0.0.1:2080</div>
-          </div>
-          <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">WireGuard 原生設定檔（備用）</div>
-            <div class="font-semibold text-sm mt-1">%USERPROFILE%\Desktop\wireguard-us-phoenix.conf</div>
-            <div>D:\opencode默認專案\tmp\opencode\wireguard-us-phoenix.conf</div>
-          </div>
-          <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">SSH 私鑰（連主機用）</div>
-            <div class="font-semibold text-sm mt-1">C:\Users\Administrator\.ssh\vpn-us-phoenix</div>
-            <div>公鑰：vpn-us-phoenix.pub</div>
-          </div>
-        </div>
-        <div class="space-y-2">
-          <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">WireGuard 官方客戶端（已安裝，僅 9MB）</div>
-            <div class="font-semibold text-sm mt-1">C:\Program Files\WireGuard\wireguard.exe</div>
-            <div>D:\Installers\wireguard.msi / D:\WireGuard\wireguard.exe (備份)</div>
-            <div class="text-amber-700">註：曾因驅動未安裝（1.1 版衝突）改用 sing-box 用戶態方案</div>
-          </div>
-          <div class="p-3 bg-zinc-50 rounded border">
-            <div class="text-zinc-500">伺服器 SSH</div>
-            <div class="font-semibold text-sm mt-1">ssh -i ~/.ssh/vpn-us-phoenix ubuntu@129.146.115.218</div>
-            <div>sudo wg show / sudo iptables -L -n 查看防火牆</div>
-            <div>已修復：INPUT 51820/UDP + FORWARD wg0</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Example Config -->
-    <section class="mt-8 bg-white rounded-xl border border-zinc-200 p-6">
-      <h2 class="font-bold">設定檔範例（已脫敏）</h2>
-      <p class="text-sm text-zinc-600 mt-1">真實 PrivateKey / PresharedKey 請用本機檔案，此處以 *** 代替，避免外洩。</p>
-      <pre class="mt-4 bg-zinc-900 text-zinc-100 p-4 rounded-lg mono text-xs overflow-x-auto"><code>[Interface]
-PrivateKey = *** 請從本機 wireguard-us-phoenix.conf 複製 ***
-Address = 10.66.66.2/24,fd42:42:42::2/64
-DNS = 1.1.1.1,8.8.8.8
-MTU = 1280
-
-[Peer]
-PublicKey = Z41fXyOIen8r4NqqUAVz86NU5pJ7YueuRmgBLmBhVgA=
-PresharedKey = *** 請從本機複製 ***
-Endpoint = 129.146.115.218:51820
-AllowedIPs = 0.0.0.0/0,::/0
-PersistentKeepalive = 25</code></pre>
-    </section>
-
-    <!-- Maintenance -->
-    <section class="mt-8 grid md:grid-cols-2 gap-4">
-      <div class="bg-white rounded-xl border border-zinc-200 p-6">
-        <h3 class="font-semibold">新增第二個裝置</h3>
-        <p class="text-sm text-zinc-600 mt-1">SSH 進主機執行：</p>
-        <pre class="mt-3 bg-zinc-900 text-zinc-100 p-3 rounded mono text-xs overflow-x-auto">ssh -i ~/.ssh/vpn-us-phoenix ubuntu@129.146.115.218
-# 在伺服器上產生第二個客戶端
-wg genkey | tee /tmp/c2_priv | wg pubkey > /tmp/c2_pub
-wg genpsk > /tmp/c2_psk
-cat /tmp/c2_priv
-cat /tmp/c2_pub
-# 然後編輯 /etc/wireguard/wg0.conf 新增一個 [Peer]，重啟 wg-quick@wg0</pre>
-      </div>
-      <div class="bg-white rounded-xl border border-zinc-200 p-6">
-        <h3 class="font-semibold">維運提醒</h3>
-        <ul class="mt-2 text-sm space-y-1.5 list-disc list-inside text-zinc-700">
-          <li>Oracle Always Free 若 7 天完全閒置可能回收 A1.Flex，偶爾連一下即可</li>
-          <li>防火牆已開放 22/80/443/8443/51820，完成後建議把 80/443 收斂到必要來源</li>
-          <li>每月流量免費 10TB 出站，WireGuard 非常省</li>
-          <li>忘記設定？此 GitHub Page 就是說明書</li>
-        </ul>
-      </div>
-    </section>
-
-    <footer class="mt-10 pt-6 border-t border-zinc-200 text-xs text-zinc-500 flex justify-between">
-      <span>部署時間：2026-09-01 · Home Region: us-phoenix-1 · 部署者：Oracle Console AI + WireGuard</span>
-      <span>此頁面不含任何私鑰</span>
-    </footer>
-  </main>
+  <footer class="mt-10 pt-6 border-t text-xs text-zinc-500 flex justify-between">
+    <span>Oracle us-phoenix-1 · 2026-09-01 部署 · 每30分鐘 keepalive</span>
+    <span>無痕 · 不存本地</span>
+  </footer>
+</main>
 </body>
 </html>
